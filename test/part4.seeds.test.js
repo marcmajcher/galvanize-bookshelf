@@ -9,25 +9,13 @@ const { suite, test } = require('mocha');
 const knex = require('../knex');
 
 suite('part4 seeds', () => {
-  before((done) => {
-    knex.migrate.latest()
-      .then(() => {
-        done();
-      })
-      .catch((err) => {
-        done(err);
-      });
-  });
-
-  beforeEach((done) => {
-    knex.seed.run()
-      .then(() => {
-        done();
-      })
-      .catch((err) => {
-        done(err);
-      });
-  });
+  beforeEach((done) => knex.migrate.rollback()
+    .then(() => knex.migrate.latest())
+    .then(() => knex.seed.run())
+    .then(() => {
+      done();
+    })
+    .catch((err) => done(err)));
 
   test('favorites rows', (done) => {
     knex('favorites').orderBy('id', 'ASC')

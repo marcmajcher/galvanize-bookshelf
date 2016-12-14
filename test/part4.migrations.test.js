@@ -9,15 +9,13 @@ const { suite, test } = require('mocha');
 const knex = require('../knex');
 
 suite('part4 migrations', () => {
-  before((done) => {
-    knex.migrate.latest()
-      .then(() => {
-        done();
-      })
-      .catch((err) => {
-        done(err);
-      });
-  });
+  before((done) => knex.migrate.rollback()
+    .then(() => knex.migrate.latest())
+    .then(() => knex.seed.run())
+    .then(() => {
+      done();
+    })
+    .catch((err) => done(err)));
 
   test('favorites columns', (done) => {
     knex('favorites').columnInfo()

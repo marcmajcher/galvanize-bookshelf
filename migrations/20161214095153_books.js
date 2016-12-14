@@ -15,7 +15,8 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('books');
+  // return knex.schema.dropTable('books');
+  return knex.raw('DROP TABLE books CASCADE');
 };
 
 /*
