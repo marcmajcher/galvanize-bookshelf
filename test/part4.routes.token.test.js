@@ -45,7 +45,8 @@ suite('part4 routes token', () => {
         email: 'jkrowling@gmail.com',
         password: 'youreawizard'
       })
-      .expect('set-cookie', /token=[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+; Path=\/;.+HttpOnly/)
+      .expect('set-cookie',
+/token=[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+; Path=\/;.+HttpOnly/)
       .expect('Content-Type', /json/)
       .expect((res) => {
         delete res.body.createdAt;
