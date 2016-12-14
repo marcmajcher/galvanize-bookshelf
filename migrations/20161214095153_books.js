@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint-disable max-len */
+
 exports.up = function(knex) {
   return knex.schema.createTable('books', (table) => {
     table.increments();
@@ -15,3 +17,18 @@ exports.up = function(knex) {
 exports.down = function(knex) {
   return knex.schema.dropTable('books');
 };
+
+/*
+┌──────────────────────────────────────────────────────────────────────────────────────────┐
+│                                          books                                           │
+├─────────────┬─────────────────────────┬──────────────────────────────────────────────────┤
+│id           │serial                   │primary key                                       │
+│title        │varchar(255)             │not null default ''                               │
+│author       │varchar(255)             │not null default ''                               │
+│genre        │varchar(255)             │not null default ''                               │
+│description  │text                     │not null default ''                               │
+│cover_url    │text                     │not null default ''                               │
+│created_at   │timestamp with time zone │not null default now()                            │
+│updated_at   │timestamp with time zone │not null default now()                            │
+└─────────────┴─────────────────────────┴──────────────────────────────────────────────────┘
+*/

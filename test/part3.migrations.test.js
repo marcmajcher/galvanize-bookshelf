@@ -5,14 +5,23 @@
 process.env.NODE_ENV = 'test';
 
 const assert = require('chai').assert;
-const { suite, test } = require('mocha');
+const {
+  suite,
+  test
+} = require('mocha');
 const knex = require('../knex');
 
 suite('part3 migrations', () => {
   before((done) => {
-    knex.migrate.latest()
+    knex.migrate.rollback()
       .then(() => {
-        done();
+        knex.migrate.latest()
+          .then(() => {
+            done();
+          })
+          .catch((err) => {
+            done(err);
+          });
       })
       .catch((err) => {
         done(err);
