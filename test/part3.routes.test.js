@@ -12,25 +12,13 @@ const knex = require('../knex');
 const server = require('../server');
 
 suite('part3 routes', () => {
-  before((done) => {
-    knex.migrate.latest()
-      .then(() => {
-        done();
-      })
-      .catch((err) => {
-        done(err);
-      });
-  });
-
-  beforeEach((done) => {
-    knex.seed.run()
-      .then(() => {
-        done();
-      })
-      .catch((err) => {
-        done(err);
-      });
-  });
+  beforeEach((done) => knex.migrate.rollback()
+    .then(() => knex.migrate.latest())
+    .then(() => knex.seed.run())
+    .then(() => {
+      done();
+    })
+    .catch((err) => done(err)));
 
   test('POST /users', (done) => {
     const password = 'ilikebigcats';
