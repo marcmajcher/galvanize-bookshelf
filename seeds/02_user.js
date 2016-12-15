@@ -6,6 +6,7 @@
 exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('users').del()
+    .then(() => knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));"))
     .then(() => knex('users').insert({
       first_name: 'Joanne',
       last_name: 'Rowling',
