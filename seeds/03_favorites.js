@@ -3,7 +3,7 @@
 exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('favorites').del()
-    .then(() => knex.raw("SELECT setval('favorites_id_seq', (SELECT MAX(id) FROM favorites));"))
+    // .then(() => knex.raw("SELECT setval('favorites_id_seq', (SELECT MAX(id) FROM favorites));"))
     .then(() => knex('favorites').insert({
       book_id: 1,
       user_id: 1,

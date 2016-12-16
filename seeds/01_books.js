@@ -3,10 +3,14 @@
 /* eslint-disable max-len */
 /* eslint-disable camelcase */
 
+// ALTER SEQUENCE seq RESTART WITH 1;
+// UPDATE t SET idcolumn=nextval('seq');
+
 exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('books').del()
-    .then(() => knex.raw("SELECT setval('books_id_seq', (SELECT MAX(id) FROM books));"))
+    .then(() => knex.raw("ALTER SEQUENCE books_id_seq RESTART WITH 1"))
+    // .then(() => knex.raw("SELECT setval('books_id_seq', (SELECT MAX(id) FROM books));"))
     .then(() => knex('books').insert(
       [{
         // id: 1,
